@@ -14,3 +14,10 @@ class ArticleView(APIView):
         articles = Article.objects.all()
         serializer = ArticleSerializer(articles, many=True)
         return Response({'data': serializer.data})
+
+    def post(self, request):
+        article = request.data.get('article')
+        serializer = ArticleSerializer(data=article)
+        if (serializer.is_valid(raise_exception=True)):
+            serializer.save()
+        return Response({'data': serializer.data})
