@@ -15,9 +15,24 @@ class ArticleView(APIView):
         serializer = ArticleSerializer(articles, many=True)
         return Response({'data': serializer.data})
 
+    def delete(self, request, id):
+        article = get_object_or_404(Article.objects.all(), pk=id)
+        print(article)
+        article.delete()
+        return Response({'data': 'Article deleted'})
+
     def post(self, request):
         article = request.data.get('article')
         serializer = ArticleSerializer(data=article)
+        if (serializer.is_valid(raise_exception=True)):
+            serializer.save()
+        return Response({'data': serializer.data})
+
+    def put(self, request, id):
+        article = get_object_or_404(Article.objects.all(), pk=id)
+        data = request.data.get('article')
+        serializer = ArticleSerializer(
+            instance=article, data=data, partial=True)
         if (serializer.is_valid(raise_exception=True)):
             serializer.save()
         return Response({'data': serializer.data})

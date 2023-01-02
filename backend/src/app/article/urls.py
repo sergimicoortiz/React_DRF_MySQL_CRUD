@@ -9,4 +9,5 @@ app_name = "articles"
 urlpatterns = [
     path('', ArticleView.as_view()),
     path('<int:id>', ArticleView.as_view()),
+    # path('/<int:id>', ArticleView.as_view()),
 ]
