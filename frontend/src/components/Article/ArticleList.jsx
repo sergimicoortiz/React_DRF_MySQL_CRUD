@@ -3,11 +3,12 @@ import { useArticles } from '../../hooks/useArticle';
 
 export default function ArticleList() {
     const articles = useArticles();
-    console.log(articles);
     return (
         <div>
             <h1>ArticleList</h1>
-            <ArticleCard />
+            {articles.map((article) => (
+                <ArticleCard article={article} />
+            ))}
         </div>
     )
 }

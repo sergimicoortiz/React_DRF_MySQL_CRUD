@@ -15,4 +15,11 @@ Install depencdences:
 - pipenv install mysqlclient
 - django-admin startproject src .  Start a new DRF proyect in the acual path
 
-- pipenv sync   Install dependencys
+- pipenv install   Install dependencis
+
+
+---
+
+## URL: 
+
+- https://stackoverflow.com/questions/7475223/mysql-config-not-found-when-installing-mysqldb-python-interface
