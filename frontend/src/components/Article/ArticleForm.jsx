@@ -1,44 +1,49 @@
 import React, { useState } from "react";
 import propTypes from "prop-types";
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as Yup from 'yup';
+import('./ArticleForm.css');
 
 export default function ArticleForm(SendData) {
 
-    const [title, setTitle] = useState('')
-    const [body, setBody] = useState('')
+    const validators = Yup.object().shape({
+        title: Yup.string().required('Title is required').min(3).max(15),
+        body: Yup.string().required('Body is required').min(3).max(50),
+    });
 
-    function handleChange(e) {
-        switch (e.target.name) {
-            case 'title':
-                setTitle(e.target.value)
-                break;
-            case 'body':
-                setBody(e.target.value)
-                break;
+    const {
+        register,
+        handleSubmit,
+        reset,
+        formState: { errors }
+    } = useForm({
+        resolver: yupResolver(validators)
+    });
 
-            default:
-                break;
-        }
-    }//handleChange
-
-    function handleSubmit(e) {
-        e.preventDefault();
-        console.log({ title, body });
-        SendData({ title, body });
-    }//handleSubmit
+    const onSubmit = data => {
+        console.log(data);
+    };
 
     return (
         <div>
-            <form onSubmit={handleSubmit}>
-                <label >Title:
-                    <input type="text" name="title" onChange={handleChange} />
-                </label><br />
-                <label >Body:
-                    <textarea cols="30" rows="10" name="body" onChange={handleChange}></textarea>
-                </label><br />
+            <form onSubmit={handleSubmit(onSubmit)}>
+                <label>Title: </label>
+                <input
+                    name="title"
+                    type="text"
+                    {...register('title')} />
+                <div className="error">{errors.title?.message}</div>
+
+                <label>Body: </label>
+                <textarea name="body" cols="30" rows="10" {...register('body')}></textarea>
+                <div className="error">{errors.body?.message}</div>
+
                 <button type="submit">SEND</button>
+                <button type="button" onClick={reset}>Reset</button>
             </form>
         </div>
-    )
+    );
 }
 
 ArticleForm.propTypes = {

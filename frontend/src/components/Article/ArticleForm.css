@@ -1,0 +1,9 @@
+.error {
+    color: red;
+    text-transform: capitalize;
+}
+
+.errorInput{
+    color: darkred;
+    text-decoration: line-through;
+}
