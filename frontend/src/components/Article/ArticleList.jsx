@@ -1,11 +1,17 @@
 import React, { useState } from "react";
 import ArticleCard from './ArticleCard';
+import { useNavigate } from 'react-router-dom';
 import { useArticles, useDeleteArticle } from '../../hooks/useArticle';
 
 export default function ArticleList() {
     // const [articles, setArticles] = useState([]);
     // useArticles(setArticles);
     const { articles, setArticles } = useArticles();
+    const navigate = useNavigate();
+
+    const redirects = {
+        create: () => navigate('/article/create')
+    }
 
     function delete_article(id) {
         useDeleteArticle(id);
@@ -23,6 +29,8 @@ export default function ArticleList() {
     return (
         <div>
             <h1>ArticleList</h1>
+            <button onClick={redirects.create}>CREATE</button>
+            <p>-----------------------------------</p>
             {articlesHTML}
         </div>
     )

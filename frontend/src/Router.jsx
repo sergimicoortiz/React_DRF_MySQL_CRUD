@@ -8,6 +8,7 @@ export default function Router() {
     const Home = React.lazy(() => import('./components/Home'));
     const NotFound = React.lazy(() => import('./components/error_404'));
     const ArticleList = React.lazy(() => import('./components/Article/ArticleList'));
+    const ArticleCreate = React.lazy(() => import('./components/Article/ArticleCreate'));
 
     return (
         <Suspense fallback={<Loading />}>
@@ -17,6 +18,7 @@ export default function Router() {
                     <Route path="/" element={<Home />} />
                     <Route path="/home" element={<Home />} />
                     <Route path="/article" element={<ArticleList />} />
+                    <Route path="/article/create" element={<ArticleCreate />} />
                     <Route path="*" element={<NotFound />} />
                 </Routes>
             </BrowserRouter>
