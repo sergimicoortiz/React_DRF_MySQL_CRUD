@@ -5,7 +5,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import('./ArticleForm.css');
 
-export default function ArticleForm(SendData) {
+export default function ArticleForm({ SendData }) {
 
     const validators = Yup.object().shape({
         title: Yup.string().required('Title is required').min(3).max(15),
@@ -15,14 +15,13 @@ export default function ArticleForm(SendData) {
     const {
         register,
         handleSubmit,
-        reset,
         formState: { errors }
     } = useForm({
         resolver: yupResolver(validators)
     });
 
     const onSubmit = data => {
-        console.log(data);
+        SendData(data);
     };
 
     return (
@@ -40,7 +39,6 @@ export default function ArticleForm(SendData) {
                 <div className="error">{errors.body?.message}</div>
 
                 <button type="submit">SEND</button>
-                <button type="button" onClick={reset}>Reset</button>
             </form>
         </div>
     );

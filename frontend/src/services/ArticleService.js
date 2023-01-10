@@ -7,7 +7,7 @@ const ArticleService = {
     },
 
     CreateArticles(data) {
-        return Api().get('article/', data);
+        return Api().post('article/', data);
     },
 
     GetArticle(id) {
