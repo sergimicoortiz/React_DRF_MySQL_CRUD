@@ -1,8 +1,15 @@
 import React from "react";
-
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Home() {
+
+    const toasterTest = () => toast.success("This is a test");
+
     return (
-        <h1>HOME</h1>
+        <div>
+            <h1>HOME</h1>
+            <button onClick={toasterTest}>Toaster test</button>
+        </div>
     )
 }

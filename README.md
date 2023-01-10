@@ -23,3 +23,4 @@ Install depencdences:
 ## URL: 
 
 - https://stackoverflow.com/questions/7475223/mysql-config-not-found-when-installing-mysqldb-python-interface
+- https://fkhadra.github.io/react-toastify/introduction/
