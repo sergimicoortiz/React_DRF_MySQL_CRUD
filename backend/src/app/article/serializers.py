@@ -5,7 +5,7 @@ from .models import Article
 class ArticleSerializer(serializers.ModelSerializer):
     class Meta:
         model = Article
-        fields = ['id', 'title', 'body']
+        fields = ['slug', 'title', 'body']
 
 # class ArticleSerializer(serializers.Serializer):
 #     id = serializers.ReadOnlyField()

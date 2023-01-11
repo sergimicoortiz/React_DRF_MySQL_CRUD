@@ -4,8 +4,8 @@ import { useOneArticle, useUpdateArticle } from "../../hooks/useArticle";
 import ArticleForm from "./ArticleForm";
 
 export default function ArticleUpdate() {
-    const { id } = useParams()
-    const { article } = useOneArticle(id);
+    const { slug } = useParams()
+    const { article } = useOneArticle(slug);
     const [newArticle, setNewArticle] = useState();
 
     function updateArticle(data) {
@@ -14,8 +14,8 @@ export default function ArticleUpdate() {
 
     useEffect(() => {
         if (newArticle) {
-            console.log(newArticle, 'EFFECT');
-            // useUpdateArticle(id, newArticle);
+            console.log(slug, newArticle, 'EFFECT');
+            // useUpdateArticle(slug, newArticle);
         }
     }, [newArticle]);
 

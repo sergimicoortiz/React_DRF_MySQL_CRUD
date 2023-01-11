@@ -35,7 +35,7 @@ export default function Router() {
                     <Route path="/home" element={<Home />} />
                     <Route path="/article" element={<ArticleList />} />
                     <Route path="/article/create" element={<ArticleCreate />} />
-                    <Route path="/article/update/:id" element={<ArticleUpdate />} />
+                    <Route path="/article/update/:slug" element={<ArticleUpdate />} />
                     <Route path="*" element={<NotFound />} />
                 </Routes>
             </BrowserRouter>

@@ -3,7 +3,7 @@ import propTypes from "prop-types";
 
 export default function ArticleCard({
     article = {
-        id: null,
+        slug: '',
         title: '',
         body: ''
     },
@@ -13,7 +13,7 @@ export default function ArticleCard({
 
     return (
         <div>
-            <p>ID: {article.id}</p>
+            <p>Slug: {article.slug}</p>
             <p>Title: {article.title}</p>
             <p>Body: {article.body}</p>
             <button onClick={delete_article}>DELETE</button>
@@ -25,7 +25,7 @@ export default function ArticleCard({
 
 ArticleCard.propTypes = {
     article: propTypes.shape({
-        id: propTypes.number.isRequired,
+        slug: propTypes.string.isRequired,
         title: propTypes.string.isRequired,
         body: propTypes.string.isRequired,
     }),

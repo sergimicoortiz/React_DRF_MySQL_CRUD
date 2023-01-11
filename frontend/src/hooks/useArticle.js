@@ -13,21 +13,21 @@ export function useArticles() {
     return { articles, setArticles };
 }
 
-export function useOneArticle(id) {
+export function useOneArticle(slug) {
     const [article, setArticle] = useState({});
 
     useEffect(function () {
         console.log('useOneArticle');
-        ArticleService.GetArticle(id)
+        ArticleService.GetArticle(slug)
             .then(res => setArticle(res.data.data))
             .catch(e => console.error(e));
     }, []);
     return { article, setArticle };
 }
 
-export function useDeleteArticle(id) {
-    ArticleService.DeleteArticle(id)
-        .then(res => { console.log(res.status, 'DELETE', id) })
+export function useDeleteArticle(slug) {
+    ArticleService.DeleteArticle(slug)
+        .then(res => { console.log(res.status, 'DELETE', slug) })
         .catch(e => console.log(e))
 }
 
@@ -41,12 +41,12 @@ export async function useCreateArticle(data) {
     }
 }
 
-export function useUpdateArticle(id, data) {
+export function useUpdateArticle(slug, data) {
     const [article, setArticle] = useState({});
 
     useEffect(function () {
         console.log('useOneArticle');
-        ArticleService.UpdateArticle(id, data)
+        ArticleService.UpdateArticle(slug, data)
             .then(res => {
                 console.log(res.status)
                 setArticle(res.data.data);})

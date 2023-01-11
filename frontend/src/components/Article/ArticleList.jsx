@@ -9,16 +9,16 @@ export default function ArticleList() {
 
     const redirects = {
         create: () => navigate('/article/create'),
-        update: id => navigate(`/article/update/${id}`),
+        update: slug => navigate(`/article/update/${slug}`),
     }
 
-    function delete_article(id) {
-        useDeleteArticle(id);
-        setArticles(articles.filter(item => item.id !== id));
+    function delete_article(slug) {
+        useDeleteArticle(slug);
+        setArticles(articles.filter(item => item.slug !== slug));
     }
 
     const articlesHTML = articles.length > 0 ? (articles.map((article) => (
-        <ArticleCard article={article} key={article.id} update_article={() => redirects.update(article.id)} delete_article={() => delete_article(article.id)} />
+        <ArticleCard article={article} key={article.slug} update_article={() => redirects.update(article.slug)} delete_article={() => delete_article(article.slug)} />
     ))) : (<p>No Articles</p>)
 
     return (

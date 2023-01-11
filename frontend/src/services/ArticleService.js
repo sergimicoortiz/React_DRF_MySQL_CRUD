@@ -10,16 +10,16 @@ const ArticleService = {
         return Api().post('article/', data);
     },
 
-    GetArticle(id) {
-        return Api().get(`article/${id}`);
+    GetArticle(slug) {
+        return Api().get(`article/${slug}`);
     },
 
-    DeleteArticle(id) {
-        return Api().delete(`article/${id}`);
+    DeleteArticle(slug) {
+        return Api().delete(`article/${slug}`);
     },
 
-    UpdateArticle(id, data) {
-        return Api().put(`article/${id}`, data);
+    UpdateArticle(slug, data) {
+        return Api().put(`article/${slug}`, data);
     },
 
 }

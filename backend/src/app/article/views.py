@@ -6,17 +6,17 @@ from .serializers import ArticleSerializer
 
 
 class ArticleView(APIView):
-    def get(self, request, id=None):
-        if id:
-            article = get_object_or_404(Article.objects.all(), pk=id)
+    def get(self, request, slug=None):
+        if slug:
+            article = get_object_or_404(Article.objects.all(), slug=slug)
             serializer_one = ArticleSerializer(article)
             return Response({'data': serializer_one.data})
         articles = Article.objects.all()
         serializer = ArticleSerializer(articles, many=True)
         return Response({'data': serializer.data})
 
-    def delete(self, request, id):
-        article = get_object_or_404(Article.objects.all(), pk=id)
+    def delete(self, request, slug):
+        article = get_object_or_404(Article.objects.all(), slug=slug)
         print(article)
         article.delete()
         return Response({'data': 'Article deleted'})
@@ -28,8 +28,8 @@ class ArticleView(APIView):
             serializer.save()
         return Response({'data': serializer.data})
 
-    def put(self, request, id):
-        article = get_object_or_404(Article.objects.all(), pk=id)
+    def put(self, request, slug):
+        article = get_object_or_404(Article.objects.all(), slug=slug)
         data = request.data.get('article')
         serializer = ArticleSerializer(
             instance=article, data=data, partial=True)
