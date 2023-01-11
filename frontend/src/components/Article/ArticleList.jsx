@@ -13,13 +13,17 @@ export default function ArticleList() {
     }
 
     function delete_article(slug) {
-        useDeleteArticle(slug);
-        setArticles(articles.filter(item => item.slug !== slug));
+        useDeleteArticle(slug)
+            .then(ok => {
+                if (ok) {
+                    setArticles(articles.filter(item => item.slug !== slug));
+                }
+            })
     }
 
-    const articlesHTML = articles.length > 0 ? (articles.map((article) => (
-        <ArticleCard article={article} key={article.slug} update_article={() => redirects.update(article.slug)} delete_article={() => delete_article(article.slug)} />
-    ))) : (<p>No Articles</p>)
+    const articlesHTML = articles.length > 0
+        ? articles.map(article => <ArticleCard article={article} key={article.slug} update_article={() => redirects.update(article.slug)} delete_article={() => delete_article(article.slug)} />)
+        : <p>No Articles</p>
 
     return (
         <div>

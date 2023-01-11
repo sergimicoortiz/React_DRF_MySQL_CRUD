@@ -1,27 +1,27 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { toast } from 'react-toastify';
 import { useOneArticle, useUpdateArticle } from "../../hooks/useArticle";
 import ArticleForm from "./ArticleForm";
 
 export default function ArticleUpdate() {
+    const navigate = useNavigate();
     const { slug } = useParams()
     const { article } = useOneArticle(slug);
-    const [newArticle, setNewArticle] = useState();
 
     function updateArticle(data) {
-        setNewArticle(data);
+        useUpdateArticle(slug, data)
+            .then(ok => {
+                if (ok) {
+                    toast.success('Article updated');
+                    navigate('/article');
+                }
+            });
     }
-
-    useEffect(() => {
-        if (newArticle) {
-            console.log(slug, newArticle, 'EFFECT');
-            // useUpdateArticle(slug, newArticle);
-        }
-    }, [newArticle]);
-
     return (
         <div>
-            <p>UPDATE</p>
+            <p>UPDATE Article: {slug}</p>
             <ArticleForm SendData={updateArticle} article={article} />
         </div>
     )

@@ -5,7 +5,7 @@ export function useArticles() {
     const [articles, setArticles] = useState([]);
 
     useEffect(function () {
-        console.log('useArticles');
+        console.log('a');
         ArticleService.GetArticles()
             .then(res => setArticles(res.data.data))
             .catch(e => console.error(e));
@@ -17,7 +17,6 @@ export function useOneArticle(slug) {
     const [article, setArticle] = useState({});
 
     useEffect(function () {
-        console.log('useOneArticle');
         ArticleService.GetArticle(slug)
             .then(res => setArticle(res.data.data))
             .catch(e => console.error(e));
@@ -25,10 +24,14 @@ export function useOneArticle(slug) {
     return { article, setArticle };
 }
 
-export function useDeleteArticle(slug) {
-    ArticleService.DeleteArticle(slug)
-        .then(res => { console.log(res.status, 'DELETE', slug) })
-        .catch(e => console.log(e))
+export async function useDeleteArticle(slug) {
+    try {
+        await ArticleService.DeleteArticle(slug);
+        return true;
+    } catch (error) {
+        console.error(error);
+        return false;
+    }
 }
 
 export async function useCreateArticle(data) {
@@ -41,17 +44,12 @@ export async function useCreateArticle(data) {
     }
 }
 
-export function useUpdateArticle(slug, data) {
-    const [article, setArticle] = useState({});
-
-    useEffect(function () {
-        console.log('useOneArticle');
-        ArticleService.UpdateArticle(slug, data)
-            .then(res => {
-                console.log(res.status)
-                setArticle(res.data.data);})
-            .catch(e => console.error(e));
-    }, []);
-    return { article, setArticle };
-
+export async function useUpdateArticle(slug, data) {
+    try {
+        await ArticleService.UpdateArticle(slug, { 'article': data });
+        return true;
+    } catch (error) {
+        console.error(error);
+        return false;
+    }
 }

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import propTypes from "prop-types";
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -6,9 +6,8 @@ import * as Yup from 'yup';
 import('./ArticleForm.css');
 
 export default function ArticleForm({ SendData, article = {
-    id: null,
     title: '',
-    body: ''
+    body: '',
 }, }) {
 
     const validators = Yup.object().shape({
