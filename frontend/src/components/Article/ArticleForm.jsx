@@ -1,11 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import propTypes from "prop-types";
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import('./ArticleForm.css');
 
-export default function ArticleForm({ SendData }) {
+export default function ArticleForm({ SendData, article = {
+    id: null,
+    title: '',
+    body: ''
+}, }) {
 
     const validators = Yup.object().shape({
         title: Yup.string().required('Title is required').min(3).max(15),
@@ -15,6 +19,7 @@ export default function ArticleForm({ SendData }) {
     const {
         register,
         handleSubmit,
+        setValue,
         formState: { errors }
     } = useForm({
         resolver: yupResolver(validators)
@@ -23,6 +28,11 @@ export default function ArticleForm({ SendData }) {
     const onSubmit = data => {
         SendData(data);
     };
+
+    useEffect(() => {
+        setValue('title', article.title);
+        setValue('body', article.body);
+    }, [article]);
 
     return (
         <div>
@@ -35,7 +45,7 @@ export default function ArticleForm({ SendData }) {
                 <div className="error">{errors.title?.message}</div>
 
                 <label>Body: </label>
-                <textarea name="body" cols="30" rows="10" {...register('body')}></textarea>
+                <textarea name="body" cols="30" rows="10" {...register('body')} />
                 <div className="error">{errors.body?.message}</div>
 
                 <button type="submit">SEND</button>
@@ -45,5 +55,6 @@ export default function ArticleForm({ SendData }) {
 }
 
 ArticleForm.propTypes = {
-    SendData: propTypes.func.isRequired
+    SendData: propTypes.func.isRequired,
+    article: propTypes.object
 }
