@@ -31,6 +31,8 @@ class ArticleView(APIView):
     def put(self, request, slug):
         article = get_object_or_404(Article.objects.all(), slug=slug)
         data = request.data.get('article')
+        if 'title' in data.keys() and data['title'] != article.title:
+            data['slug'] = None
         serializer = ArticleSerializer(
             instance=article, data=data, partial=True)
         if (serializer.is_valid(raise_exception=True)):
