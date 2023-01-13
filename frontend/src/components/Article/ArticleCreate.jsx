@@ -1,26 +1,14 @@
 import React from "react";
 import ArticleForm from "./ArticleForm";
-import { useCreateArticle } from '../../hooks/useArticle';
-import { useNavigate } from "react-router-dom";
-import { toast } from 'react-toastify';
+import { useArticles } from '../../hooks/useArticle';
 
 export default function ArticleCreate() {
-    const navigate = useNavigate();
-
-    function createArticle(data) {
-        useCreateArticle(data)
-            .then(ok => {
-                if (ok) {
-                    toast.success('Article created');
-                    navigate('/article');
-                }
-            });
-    }
+    const { useCreateArticle } = useArticles();
 
     return (
         <div>
             <p>ARTICLE CREATE</p>
-            <ArticleForm SendData={createArticle} />
+            <ArticleForm SendData={(data) => useCreateArticle(data)} />
         </div>
     )
 }

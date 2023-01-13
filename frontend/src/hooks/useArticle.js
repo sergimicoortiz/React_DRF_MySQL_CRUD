@@ -22,14 +22,14 @@ export function useArticles() {
                 };
             })
             .catch(e => console.error(e));
-    }//useDeleteArticle
+    }
 
     const useOneArticle = useCallback((slug) => {
         console.log('a');
         ArticleService.GetArticle(slug)
             .then(res => setArticles([res.data.data]))
             .catch(e => console.error(e));
-    }, []);//useOneArticle
+    }, []);
 
     const useUpdateArticle = useCallback((slug, data) => {
         ArticleService.UpdateArticle(slug, { 'article': data })
@@ -42,15 +42,16 @@ export function useArticles() {
             .catch(e => console.error(e));
     }, []);
 
-    return { articles, useDeleteArticle, useOneArticle, useUpdateArticle };
-}
+    const useCreateArticle = useCallback(data => {
+        ArticleService.CreateArticles({ 'article': data })
+            .then(res => {
+                if (res.status === 200) {
+                    toast.success('Article created');
+                    navigate('/article');
+                }
+            })
+            .catch(e => console.error(e));
+    }, []);
 
-export async function useCreateArticle(data) {
-    try {
-        await ArticleService.CreateArticles({ 'article': data });
-        return true;
-    } catch (error) {
-        console.error(error);
-        return false;
-    }
+    return { articles, useDeleteArticle, useOneArticle, useUpdateArticle, useCreateArticle };
 }
