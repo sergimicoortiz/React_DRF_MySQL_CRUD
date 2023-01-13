@@ -1,37 +1,51 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useCallback } from "react"
 import ArticleService from '../services/ArticleService';
 
 export function useArticles() {
     const [articles, setArticles] = useState([]);
+    const [status, setStatus] = useState(false);
 
     useEffect(function () {
-        console.log('a');
         ArticleService.GetArticles()
             .then(res => setArticles(res.data.data))
             .catch(e => console.error(e));
     }, []);
-    return { articles, setArticles };
-}
 
-export function useOneArticle(slug) {
-    const [article, setArticle] = useState({});
+    const timeoutStatusOK = (time = 400) => {
+        setStatus(true);
+        setTimeout(() => {
+            setStatus(false);
+        }, time);
+    }//intervalStatus
 
-    useEffect(function () {
-        ArticleService.GetArticle(slug)
-            .then(res => setArticle(res.data.data))
+    const useDeleteArticle = (slug) => {
+        ArticleService.DeleteArticle(slug)
+            .then(res => {
+                if (res.status === 200) {
+                    setArticles(articles.filter(item => item.slug !== slug));
+                    timeoutStatusOK()
+                };
+            })
             .catch(e => console.error(e));
-    }, []);
-    return { article, setArticle };
-}
+    }//useDeleteArticle
 
-export async function useDeleteArticle(slug) {
-    try {
-        await ArticleService.DeleteArticle(slug);
-        return true;
-    } catch (error) {
-        console.error(error);
-        return false;
-    }
+    const useOneArticle = useCallback(slug => {
+        console.log('a');
+        ArticleService.GetArticle(slug)
+            .then(res => setArticles([res.data.data]))
+            .catch(e => console.error(e));
+    }, []);//useOneArticle
+
+    // const useOneArticle = slug => {
+    //     console.log('a');
+    //     useEffect(() => {
+    //         ArticleService.GetArticle(slug)
+    //             .then(res => setArticles([res.data.data]))
+    //             .catch(e => console.error(e));
+    //     }, []);
+    // }
+
+    return { articles, status, useDeleteArticle, useOneArticle };
 }
 
 export async function useCreateArticle(data) {
